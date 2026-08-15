@@ -2,7 +2,18 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
+import Text.Pandoc.Highlighting (Style, kate, styleToCss)
+import Text.Pandoc.Options (ReaderOptions (..), WriterOptions (..))
 
+
+pandocCodeStyle :: Style
+pandocCodeStyle = kate
+
+pandocCompiler' :: Compiler (Item String)
+pandocCompiler' =
+  pandocCompilerWith
+    defaultHakyllReaderOptions
+    defaultHakyllWriterOptions { writerHighlightStyle = Just pandocCodeStyle }
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -22,6 +33,11 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
+    create ["css/syntax.css"] $ do
+      route idRoute
+      compile $ do
+        makeItem $ styleToCss pandocCodeStyle
+
     match (fromList ["about.rst", "contact.markdown"]) $ do
         -- Routes from {file.???} to {_site/file.html}
         route   $ setExtension "html"
@@ -30,7 +46,7 @@ main = hakyll $ do
         -- Compiler is a Monad
         -- relativizeUrls :: Item String -> Compiler (Item String)
         -- Traverse HTML and change absolute URLs to relative ones
-        compile $ pandocCompiler
+        compile $ pandocCompiler'
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
@@ -38,7 +54,7 @@ main = hakyll $ do
 
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ pandocCompiler'
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
