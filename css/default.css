@@ -115,6 +115,9 @@ article .header {
     margin: 0 auto;
     padding: 0;
   }
+  img {
+    max-width: 60rem;
+  }
   header {
     margin: 0 0 3rem;
     padding: 1.2rem 0;

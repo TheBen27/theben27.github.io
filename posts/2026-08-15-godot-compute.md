@@ -148,8 +148,6 @@ If you press "Play", you should see a magenta square. This is the texture you ju
 
 Finally! In this section, we'll read from and write to the texture we've made with a compute shader. We'll just be inverting the image's colors over and over again, but conceptually, this is a big step forward.
 
-![Diagram showing four boxes: texture RID, compute shader, Texture2DRD, Sprite2D, as well as a picture of a face with the text "your eyeballs". The compute shader box is connected to the Texture RID box bidirectionally with arrows. Texture RID, Texture2DRD, Sprite2D, and your eyeballs form a chain of arrows from left to right.](/images/compute-shader-diagram-1.png)\
-
 Let's create a compute shader called `invert.glsl`. We need to use an external editor like Notepad++ to edit this.
 
 > **Warning:** if you create this as inside Godot with "FileSystem -> New TextFile...", you can edit the shader in Godot, but the shader doesn't seem to automatically syntax-check or recompile, which can be very frustrating.
