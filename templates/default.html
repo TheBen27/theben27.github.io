@@ -22,6 +22,9 @@
         </header>
 
         <main role="main">
+            $if(header_image)$
+            <img src="$header_image$" />
+            $endif$
             <h1>$title$</h1>
             $body$
         </main>

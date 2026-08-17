@@ -1,5 +1,6 @@
 ---
 title: 'Compute Shaders 102: Working With Textures'
+header_image: '/images/compute-shader-header.png'
 ...
 
 > This is an unofficial follow-up to the [Godot compute shaders tutorial](https://docs.godotengine.org/en/stable/tutorials/shaders/compute_shaders.html). I recommend you read that tutorial before reading this one.
