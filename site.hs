@@ -38,7 +38,7 @@ main = hakyll $ do
       compile $ do
         makeItem $ styleToCss pandocCodeStyle
 
-    match (fromList ["about.rst", "contact.markdown"]) $ do
+    match "about.markdown" $ do
         -- Routes from {file.???} to {_site/file.html}
         route   $ setExtension "html"
         -- compile takes Compiler (Item a)
@@ -60,28 +60,28 @@ main = hakyll $ do
             >>= relativizeUrls
 
     -- This creates a file instead of matching
-    create ["archive.html"] $ do
-        route idRoute
-        compile $ do
-            -- You can load a single item (load) or multiple items (loadAll)
-            -- This returns Compiler [Item String]
-            -- Or consider loadBody
-            posts <- recentFirst =<< loadAll "posts/*"
-            -- Context objects are used for template substitution.
-            -- Context is a monoid
-            -- field :: String -> (Item a -> Context String) -> Context a
-            -- field "body" $ \item -> pure (itemBody item) :: Context String
-            let archiveCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
-                    defaultContext
-            -- defaultContext has $body$, $url$, $path$, $title$, $foo$ [metadata]
-            -- $date$ is not provided by default, but dateField looks for date in item filename
+    -- create ["archive.html"] $ do
+    --     route idRoute
+    --     compile $ do
+    --         -- You can load a single item (load) or multiple items (loadAll)
+    --         -- This returns Compiler [Item String]
+    --         -- Or consider loadBody
+    --         posts <- recentFirst =<< loadAll "posts/*"
+    --         -- Context objects are used for template substitution.
+    --         -- Context is a monoid
+    --         -- field :: String -> (Item a -> Context String) -> Context a
+    --         -- field "body" $ \item -> pure (itemBody item) :: Context String
+    --         let archiveCtx =
+    --                 listField "posts" postCtx (return posts) `mappend`
+    --                 constField "title" "Archives"            `mappend`
+    --                 defaultContext
+    --         -- defaultContext has $body$, $url$, $path$, $title$, $foo$ [metadata]
+    --         -- $date$ is not provided by default, but dateField looks for date in item filename
 
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
+    --         makeItem ""
+    --             >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+    --             >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+    --             >>= relativizeUrls
 
 
     match "index.html" $ do
