@@ -4,13 +4,24 @@ html {
   font-style: normal;
 }
 
+code {
+  font-family: "Spline Sans Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 25px;
+}
+
+pre > code.sourceCode > span { display: inline-block; line-height: 1.1; }
+pre > code.sourceCode > span:empty { height: 1em; }
+
 body {
-  font-size: 1.6rem;
-  color: #000;
+  font-size: 28px;
+  color: #001;
+  background-color: #fff6ee;
 }
 
 header {
-  border-bottom: 0.2rem solid #000;
+  border-bottom: medium groove #000;
 }
 
 nav {
@@ -18,7 +29,7 @@ nav {
 }
 
 nav a {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: bold;
   color: black;
   text-decoration: none;
@@ -113,12 +124,12 @@ article .header {
 
 @media (min-width: 640px) {
   body {
-    width: 60rem;
+    width: 70rem;
     margin: 0 auto;
     padding: 0;
   }
   img {
-    max-width: 60rem;
+    max-width: 70rem;
   }
   header {
     margin: 0 0 3rem;
