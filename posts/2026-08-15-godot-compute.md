@@ -3,10 +3,6 @@ title: 'Godot Compute Shaders 102: Working With Textures'
 header_image: '/images/compute-shader-header.png'
 ...
 
-```
-(+) <$> Just 1 <*> Nothing
-```
-
 > This is an unofficial follow-up to the [Godot compute shaders tutorial](https://docs.godotengine.org/en/stable/tutorials/shaders/compute_shaders.html). I recommend you read that tutorial before reading this one.
 
 Writing compute shaders in Godot is currently a bit intimidating, requiring relatively low-level work for simple operations. The documentation for `RenderingDevice`, the primary way you setup and run compute shaders, straight up tells you to read the Vulkan guide if you're confused. I'm writing this tutorial series as evidence that, for simpler use cases, this is usually not necessary. Compute shaders can be tremendously powerful and flexible, and you shouldn't be intimidated by them.
