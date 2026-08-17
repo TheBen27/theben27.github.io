@@ -1,5 +1,5 @@
 ---
-title: 'Compute Shaders 102: Working With Textures'
+title: 'Godot Compute Shaders 102: Working With Textures'
 header_image: '/images/compute-shader-header.png'
 ...
 
