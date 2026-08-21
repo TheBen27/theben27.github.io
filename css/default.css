@@ -2,7 +2,7 @@ html {
   font-family: "PT Sans", sans-serif;
   font-weight: 400;
   font-style: normal;
-  background-color: #faf0e0;
+  background-color: #fafaff;
 }
 
 code {
@@ -18,12 +18,10 @@ pre > code.sourceCode > span:empty { height: 1em; }
 body {
   font-size: 28px;
   color: #001;
-  background-color: #fff6ee;
-  box-shadow: 0px 0px 20px white;
 }
 
 header {
-  border-bottom: medium groove #000;
+  background-color: #fcb;
 }
 
 nav {
@@ -136,16 +134,21 @@ blockquote > p {
 
 @media (min-width: 640px) {
   body {
-    width: 70rem;
-    margin: 0 auto;
-    padding: 0 64px;
+    width: 100%;
+    margin: 0 0;
+    padding: 0 0;
   }
   img {
     width: 70rem;
   }
+  main {
+    width: 70rem;
+    margin: 32px auto;
+    padding: 0 64px;
+  }
   header {
     margin: 0 0 3rem;
-    padding: 1.2rem 0;
+    padding: 1.2rem 2rem;
   }
   nav {
     margin: 0;
@@ -156,6 +159,7 @@ blockquote > p {
     display: inline;
   }
   footer {
+    padding: 1rem 2rem;
     text-align: right;
   }
   .logo {
