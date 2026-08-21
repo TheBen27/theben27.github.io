@@ -1,13 +1,25 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DeriveGeneric #-}
+import Data.Aeson
+import Data.Binary (Binary)
+import Data.Typeable (Typeable)
+import GHC.Generics (Generic)
 import           Data.Monoid (mappend)
 import           Hakyll
+import qualified Data.ByteString.Lazy as BL
 import Text.Pandoc.Highlighting (Style, kate, styleToCss)
 import Text.Pandoc.Options (ReaderOptions (..), WriterOptions (..))
 
 
 pandocCodeStyle :: Style
 pandocCodeStyle = kate
+
+renderPandoc' :: Item String -> Compiler (Item String)
+renderPandoc' =
+  renderPandocWith
+    defaultHakyllReaderOptions
+    defaultHakyllWriterOptions { writerHighlightStyle = Just pandocCodeStyle }
 
 pandocCompiler' :: Compiler (Item String)
 pandocCompiler' =
@@ -82,7 +94,19 @@ main = hakyll $ do
     --             >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
     --             >>= loadAndApplyTemplate "templates/default.html" archiveCtx
     --             >>= relativizeUrls
+    --
 
+    match "shaders.md" $ do
+        route $ setExtension "html"
+        compile $ do
+          shaderInfo <- shadersCompiler =<< load "data/shaders.json"
+          
+          getResourceBody
+            >>= applyAsTemplate (shadersCtx shaderInfo)
+            >>= renderPandoc'
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+            
 
     match "index.html" $ do
         route idRoute
@@ -102,9 +126,42 @@ main = hakyll $ do
     -- can "include" other templates.
     match "templates/*" $ compile templateBodyCompiler
 
+    match "data/shaders.json" $ compile getResourceLBS
+
 
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
+
+shadersCtx :: Item [Shader] -> Context a
+shadersCtx shaders = listField "shaders" shaderCtx (pure $ sequenceA shaders)
+
+shaderCtx :: Context Shader
+shaderCtx =
+  field "shader_title" (pure . shaderTitle . itemBody) `mappend`
+  field "shader_url" (pure . shaderUrl . itemBody) `mappend`
+  field "shader_img" (pure . shaderImg . itemBody)
+
+shadersCompiler :: Item BL.ByteString -> Compiler (Item [Shader])
+shadersCompiler input =
+    case (decode (itemBody input)) :: Maybe [Shader] of
+      Nothing -> fail "Could not parse shaders file"
+      (Just s) -> pure (itemSetBody s input)
+
+data Shader = Shader {
+  shaderTitle :: String,
+  shaderUrl :: String,
+  shaderImg :: String
+} deriving (Eq, Show, Typeable, Generic)
+
+instance Binary Shader
+
+instance FromJSON Shader where
+  parseJSON = withObject "Shader" $ \v ->
+    Shader <$> v .: "title" <*> v .: "url" <*> v .: "img"
+
+-- Load shader data from a "database" file (becomes Item [Shader])
+-- Function to build a context from a Shader
+-- Use listField "shaders" shaderCtx (pure shaders)
