@@ -1,5 +1,6 @@
 ---
 title: 'Absolute Failure: Haskell''s Bottom Type(s?)'
+header_image: '/images/haskell-bottom-header.png'
 ...
 
 What is the type of a function that loops forever, or crashes the program? How do you represent a function that can't normally be called, or parameterize a type so that some forms of it can't be created?
