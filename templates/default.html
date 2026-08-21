@@ -14,19 +14,31 @@
     </head>
     <body>
         <header>
-            <div class="logo">
-                <a href="/">The Pointless Programming Blog</a>
+            $if(header_image)$
+            <img class="img_header_image" src="$header_image$" />
+            <div class="img_header_links">
+                <div class="logo">
+                    <a href="/">The Pointless Programming Blog</a>
+                </div>
+                <nav>
+                    <a href="/">Posts</a>
+                    <a href="/about.html">About</a>
+                </nav>
             </div>
-            <nav>
-                <a href="/">Posts</a>
-                <a href="/about.html">About</a>
-            </nav>
+            $else$
+            <div class="noimg_header_links">
+                <div class="logo">
+                    <a href="/">The Pointless Programming Blog</a>
+                </div>
+                <nav>
+                    <a href="/">Posts</a>
+                    <a href="/about.html">About</a>
+                </nav>
+            </div>
+            $endif$
         </header>
 
         <main role="main">
-            $if(header_image)$
-            <img src="$header_image$" />
-            $endif$
             <h1>$title$</h1>
             $body$
         </main>
