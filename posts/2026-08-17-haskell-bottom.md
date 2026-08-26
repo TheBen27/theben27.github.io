@@ -11,6 +11,8 @@ All of these problems can be handled through the Bottom Type, a type that's easy
 
 While the bottom type shows up in plenty of programming languages, Haskell in particular has two very different ways of representing this type. I'll start by talking about bottom separate from any language, and then move into what Haskell does. This is probably never going to be useful to you (this is the Pointless Programming Blog), but it might be interesting or at least weird.
 
+<!--more-->
+
 This post assumes some basic knowledge of Haskell or other programming languages. I will try to explain what Haskell's doing when it strays from how more "normal" languages work, but some things you might have to take on faith.
 
 > The major sources for this post are [a Haskell wikibook](https://en.wikibooks.org/wiki/Haskell/Denotational_semantics) on denotational semantics, the [Bottom Haskell wiki](https://wiki.haskell.org/Bottom), Wikipedia pages, and Haskell documentation. While I didn't use it for this post, I recommend reading [this post](https://web.archive.org/web/20080819185521/http://www.thenewsh.com/~newsham/formal/curryhoward/) on the Curry-Howard correspondence and writing mathematical proofs in psuedo-Haskell. It won't help you understand this, it's just really interesting.

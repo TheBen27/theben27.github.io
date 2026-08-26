@@ -1,3 +1,15 @@
 $for(posts)$
-<p><a href="$url$">$title$</a> - $date$</p>
+<div class="post_teaser_item">
+  $if(header_image)$
+  <a href="$url$"><img class="img_header_image" src="$header_image$" /></a>
+  $endif$
+  <div>
+      <a class="post_teaser_title" href="$url$">$title$</a>
+      <span class="post_teaser_body" >$date$</span>
+  </div>
+  
+  $teaser$
+  
+  <a href="$url$">Read more…</a>
+</div>
 $endfor$

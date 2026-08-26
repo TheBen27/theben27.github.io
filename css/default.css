@@ -74,9 +74,11 @@ div.shaders_grid {
     grid-template-columns: auto;
     gap: 8px;
 }
+
 .shaders_item {
     position: relative;
 }
+
 .shaders_title {
     position: absolute;
     left: 0px;
@@ -86,7 +88,22 @@ div.shaders_grid {
     width: 100%;
     text-decoration: none;
     font-weight: 400;
-  }
+}
+
+.post_teaser_item {
+    margin-bottom: 48px;
+}
+
+.post_teaser_title {
+    text-decoration: none;
+    font-weight: 800;
+    color: black;
+}
+
+.post_teaser_body {
+    float: right;
+    font-weight: 800;
+}
 
 @media (max-width: 319px) {
   body {
