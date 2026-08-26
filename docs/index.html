@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Pointless Programming</title>
+        <link rel="stylesheet" href="./css/syntax.css" />
+        <link rel="stylesheet" href="./css/default.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <header>
+            
+            <div class="noimg_header_links">
+                <div class="logo">
+                    <a href="./">The Pointless Programming Blog</a>
+                </div>
+                <nav>
+                    <a href="./">Posts</a>
+                    <a href="./shaders.html">Shaders</a>
+                    <a href="./about.html">About</a>
+                </nav>
+            </div>
+            
+        </header>
+
+        <main role="main">
+            <h1>All Posts</h1>
+            
+<div class="post_teaser_item">
+  
+  <a href="./posts/2026-08-17-haskell-bottom.html"><img class="img_header_image" src="./images/haskell-bottom-header.png" /></a>
+  
+  <div>
+      <a class="post_teaser_title" href="./posts/2026-08-17-haskell-bottom.html">Absolute Failure: Haskell's Bottom Type(s?)</a>
+      <span class="post_teaser_body">August 17, 2026</span>
+  </div>
+  
+  <p>What is the type of a function that loops forever, or crashes the program? How do you represent a function that can’t normally be called, or parameterize a type so that some forms of it can’t be created?</p>
+<p>All of these problems can be handled through the Bottom Type, a type that’s easy to build but has some truly bizarre characteristics. The bottom type is derived from a concept that lives at the limits of what computers can do, and is a hidden part of every program, known only as bottom.</p>
+<p>(I’m overselling this a bit, but bear with me.)</p>
+<p>While the bottom type shows up in plenty of programming languages, Haskell in particular has two very different ways of representing this type. I’ll start by talking about bottom separate from any language, and then move into what Haskell does. This is probably never going to be useful to you (this is the Pointless Programming Blog), but it might be interesting or at least weird.</p>
+
+  
+  <a href="./posts/2026-08-17-haskell-bottom.html">Read more…</a>
+</div>
+
+<div class="post_teaser_item">
+  
+  <a href="./posts/2026-08-15-godot-compute.html"><img class="img_header_image" src="./images/compute-shader-header.png" /></a>
+  
+  <div>
+      <a class="post_teaser_title" href="./posts/2026-08-15-godot-compute.html">Godot Compute Shaders 102: Working With Textures</a>
+      <span class="post_teaser_body">August 15, 2026</span>
+  </div>
+  
+  <p>Writing compute shaders in Godot is currently a bit intimidating, requiring relatively low-level work for simple operations. The documentation for <code>RenderingDevice</code>, the primary way you setup and run compute shaders, straight up tells you to read the Vulkan guide if you’re confused. I’m writing this tutorial series as evidence that, for simpler use cases, this is usually not necessary. Compute shaders can be tremendously powerful and flexible, and you shouldn’t be intimidated by them.</p>
+<p>This post covers reading from and writing to textures. I’ve often found myself manipulating textures via compute shaders and using them on-screen in vertex or fragment shaders. It’s also how you write compositor effects.</p>
+<p>This tutorial started by copying the <a href="https://github.com/godotengine/godot-demo-projects/tree/master/compute/heightmap">Heightmap Demo</a>, but has simpler examples, more explanations, and some broader context on why it’s structured as it is.</p>
+
+  
+  <a href="./posts/2026-08-15-godot-compute.html">Read more…</a>
+</div>
+
+
+
+        </main>
+
+        <footer>
+            This site was generated with
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+        </footer>
+    </body>
+</html>

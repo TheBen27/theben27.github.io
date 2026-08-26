@@ -27,9 +27,12 @@ pandocCompiler' =
     defaultHakyllReaderOptions
     defaultHakyllWriterOptions { writerHighlightStyle = Just pandocCodeStyle }
 
+config :: Configuration
+config = defaultConfiguration { destinationDirectory = "docs" }
+
 --------------------------------------------------------------------------------
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith config $ do
     -- Consider this for string processing:
     -- https://hackage.haskell.org/package/hakyll-4.14.1.0/docs/Hakyll-Core-Routes.html
     -- route $ customRoute $ \s -> s
