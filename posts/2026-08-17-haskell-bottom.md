@@ -5,15 +5,13 @@ header_image: '/images/haskell-bottom-header.png'
 
 What is the type of a function that loops forever, or crashes the program? How do you represent a function that can't normally be called, or parameterize a type so that some versions of it can't be created?
 
-One solution is the Bottom Type, which is simultaneously the simplest and weirdest type I know of. It's based on an idea, `bottom`, that paradoxically exists in every part of every program and represents all the things computers can't do.
-
-(I'm being a little dramatic, but bear with me.)
+One solution is the bottom type, which is one of the simplest and weirdest concepts in programming. It's closely related to "bottom", something that is part of nearly every program but rarely shows up explicitly except through bottom types.
 
 While bottom types show up in plenty of programming languages, Haskell in particular has two very different ways of representing bottom. I'll start by talking about bottom separate from any language, and then move into what Haskell does. I can't promise that this will be useful every day, but it's a mind-expanding sort of idea that might help you see new solutions to old problems.
 
 <!--more-->
 
-This post assumes some basic knowledge of Haskell or other programming languages. I will try to explain what Haskell's doing when it strays from how more "normal" languages work, but some things you might have to take on faith.
+This post assumes some basic knowledge of Haskell or other programming languages. If you want learn Haskell, I can't recommend [Haskell Programming from First Principles](https://haskellbook.com/) enough, although you do have to pay for it. [Learn You a Haskell for Great Good!](https://learnyouahaskell.github.io/chapters.html) is free, but the lack of sample problems and exercises made it much harder for me to retain and think about what I was reading.
 
 > The major sources for this post are [a Haskell wikibook](https://en.wikibooks.org/wiki/Haskell/Denotational_semantics) on denotational semantics, the [Bottom Haskell wiki](https://wiki.haskell.org/Bottom), Wikipedia pages, and Haskell documentation. While I didn't use it for this post, I recommend reading [this post](https://web.archive.org/web/20080819185521/http://www.thenewsh.com/~newsham/formal/curryhoward/) on the Curry-Howard correspondence and writing mathematical proofs in psuedo-Haskell. It won't help you understand this, it's just really interesting.
 
