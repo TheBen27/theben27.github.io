@@ -38,11 +38,10 @@
     </section>
     <section>
         <p>What is the type of a function that loops forever, or crashes the program? How do you represent a function that can’t normally be called, or parameterize a type so that some versions of it can’t be created?</p>
-<p>One solution is the Bottom Type, which is simultaneously the simplest and weirdest type I know of. It’s based on an idea, <code>bottom</code>, that paradoxically exists in every part of every program and represents all the things computers can’t do.</p>
-<p>(I’m being a little dramatic, but bear with me.)</p>
+<p>One solution is the bottom type, which is one of the simplest and weirdest concepts in programming. It’s closely related to “bottom”, something that is part of nearly every program but rarely shows up explicitly except through bottom types.</p>
 <p>While bottom types show up in plenty of programming languages, Haskell in particular has two very different ways of representing bottom. I’ll start by talking about bottom separate from any language, and then move into what Haskell does. I can’t promise that this will be useful every day, but it’s a mind-expanding sort of idea that might help you see new solutions to old problems.</p>
 <!--more-->
-<p>This post assumes some basic knowledge of Haskell or other programming languages. I will try to explain what Haskell’s doing when it strays from how more “normal” languages work, but some things you might have to take on faith.</p>
+<p>This post assumes some basic knowledge of Haskell or other programming languages. If you want learn Haskell, I can’t recommend <a href="https://haskellbook.com/">Haskell Programming from First Principles</a> enough, although you do have to pay for it. <a href="https://learnyouahaskell.github.io/chapters.html">Learn You a Haskell for Great Good!</a> is free, but the lack of sample problems and exercises made it much harder for me to retain and think about what I was reading.</p>
 <blockquote>
 <p>The major sources for this post are <a href="https://en.wikibooks.org/wiki/Haskell/Denotational_semantics">a Haskell wikibook</a> on denotational semantics, the <a href="https://wiki.haskell.org/Bottom">Bottom Haskell wiki</a>, Wikipedia pages, and Haskell documentation. While I didn’t use it for this post, I recommend reading <a href="https://web.archive.org/web/20080819185521/http://www.thenewsh.com/~newsham/formal/curryhoward/">this post</a> on the Curry-Howard correspondence and writing mathematical proofs in psuedo-Haskell. It won’t help you understand this, it’s just really interesting.</p>
 </blockquote>
@@ -119,7 +118,7 @@
 <p>I’m calling Haskell “non-strict” and not “lazy”, which is a more common term, for <a href="https://mail.haskell.org/pipermail/haskell-cafe/2007-November/034814.html">pedantic reasons that don’t matter</a>.</p>
 </blockquote>
 <h2 id="bottom-as-a-type">Bottom as a Type</h2>
-<p>You could write programs for years without ever caring about <code>bottom</code>. While it is part of every type for the purposes of mathematiocal reasoning about programs, that’s not how it’s usually integrated into the language itself.</p>
+<p>You could write programs for years without ever caring about <code>bottom</code>. While it is part of every type for the purposes of mathematical reasoning about programs, that’s not how it’s usually integrated into the language itself.</p>
 <p>In most languages, though, you can find or make a type with the properties of <code>bottom</code>, which we will call <code>Bottom</code> with a capital <code>B</code>. This type represents only one thing: unconditional <code>bottom</code>. A function that returns <code>Bottom</code> must crash or loop forever, and a function that takes a type <code>Bottom</code> as an argument must itself crash based on the conditions discussed in the last section.</p>
 <p><code>Bottom</code>, however, is not just a marker for failure. It must be built in such a way that it is synonymous with failure. It’s a type that constrains the program instead of merely annotating it, which is why it’s interesting and useful.</p>
 <h3 id="you-cant-make-it">You can’t make it</h3>
