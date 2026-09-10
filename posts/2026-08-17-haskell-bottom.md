@@ -123,7 +123,7 @@ This complicates the hell out of `bottom` because now instead of a value being "
 
 ## Bottom as a Type
 
-You could write programs for years without ever caring about `bottom`. While it is part of every type for the purposes of mathematiocal reasoning about programs, that's not how it's usually integrated into the language itself.
+You could write programs for years without ever caring about `bottom`. While it is part of every type for the purposes of mathematical reasoning about programs, that's not how it's usually integrated into the language itself.
 
 In most languages, though, you can find or make a type with the properties of `bottom`, which we will call `Bottom` with a capital `B`. This type represents only one thing: unconditional `bottom`. A function that returns `Bottom` must crash or loop forever, and a function that takes a type `Bottom` as an argument must itself crash based on the conditions discussed in the last section.
 

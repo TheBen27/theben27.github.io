@@ -38,7 +38,7 @@ func _init(device: RenderingDevice) -> void:
 	self.device = device
 ```
 
-Most scripts extend a `Node` or one of its descendents. Instead, this script extends [RefCounted](https://docs.godotengine.org/en/stable/tutorials/best_practices/node_alternatives.html), which isn't tied to any `Node`. Other scripts will make a new version of this script ("instantiate" it) and use it internally. To do this, they use the code `ComputeHelper.new(device)`, which will call `_init(device)` and return the new `ComputeHelper`.
+Most scripts extend a `Node` or one of its descendants. Instead, this script extends [RefCounted](https://docs.godotengine.org/en/stable/tutorials/best_practices/node_alternatives.html), which isn't tied to any `Node`. Other scripts will make a new version of this script ("instantiate" it) and use it internally. To do this, they use the code `ComputeHelper.new(device)`, which will call `_init(device)` and return the new `ComputeHelper`.
 
 We can't use `_ready` because that function is part of `Node`, not `RefCounted` - it runs after a Node and all its children have entered the scene.
 
@@ -263,7 +263,7 @@ Every run:
  * Run the compute list
  * Free the pipeline object from memory, since it can only be used once
 
-> **Aside:** If (like me) you aren't familar with Vulkan, you might be confused about why we need uniform sets at all, and what it means for uniforms to be in different sets. For Vulkan, these are [Descriptor Sets](https://vkguide.dev/docs/chapter-4/descriptors_code/#descriptor-sets-shader). I *believe* uniform sets need to be updated all at once, and that there are a limited number of sets, at least four, with the number changing between machines. This means that, for performance, frequently-updated data should be in a different set from rarely-updated data.
+> **Aside:** If (like me) you aren't familiar with Vulkan, you might be confused about why we need uniform sets at all, and what it means for uniforms to be in different sets. For Vulkan, these are [Descriptor Sets](https://vkguide.dev/docs/chapter-4/descriptors_code/#descriptor-sets-shader). I *believe* uniform sets need to be updated all at once, and that there are a limited number of sets, at least four, with the number changing between machines. This means that, for performance, frequently-updated data should be in a different set from rarely-updated data.
 
 Now, every five seconds, the image will invert between magenta (red + blue) and green (white - red - blue). This is a bit boring, but you can do quite a bit by expanding simple shaders like these.
 
@@ -339,7 +339,7 @@ In our main script, we're going to take a Godot `Texture2D`, get its image, and 
     # ...
  ```
 
-Now in the editor, in the properties tab, set `test_texture` to the Godot icon - or any image with a width and height divisble by 16.
+Now in the editor, in the properties tab, set `test_texture` to the Godot icon - or any image with a width and height divisible by 16.
 
 ![Screenshot of a running Godot project containing a color-inverted Godot logo.](/images/compute-shader-inverted-logo.png)\
 
@@ -385,7 +385,7 @@ Just for fun, I made a compute shader that flips an image horizontally without s
 
 Like the invert shader, I want to be able to apply the shader to the same image again and again, progressively blurring the image over time. To do this, we need to swap the input and output textures after each invocation. On the GDScript side, there is one "main" texture that we'll use in the `Texture2DRD`, and one "swap" texture that we'll use for the compute shader. This results in a cycle of running and swapping texture handles.
 
-![A diagram showing two textures, main and swap, being run through a compute shader adn then swapped repeatedly.](/images/compute-shader-main-swap.png)\
+![A diagram showing two textures, main and swap, being run through a compute shader and then swapped repeatedly.](/images/compute-shader-main-swap.png)\
 
 When we first run the compute shader, we read from the main texture and write to the swap texture. Then we exchange the main and swap texture handles - now, the former main texture is the swap texture, and the former swap texture is the main texture. We repeat this "run and exchange" process again, and the main and swap textures are back to where they were originally.
 
@@ -428,7 +428,7 @@ func _setup_compute() -> void:
     # ...
 ```
 
-In `_run_compute`, `uniform_set` wil be made on the fly on each shader invocation,
+In `_run_compute`, `uniform_set` will be made on the fly on each shader invocation,
 since we're changing the `RDUniform` objects. After running the shader, we'll
 swap the main and swap texture IDs and make sure the `Texture2DRD` points to the most
 recently updated texture.
