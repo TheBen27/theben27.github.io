@@ -464,6 +464,4 @@ Here are some things to try if you want to experiment:
 * The current compute shader only works on images with sizes divisible by 16. To fix this, change the script to have enough workgroups to cover every pixel, then change the shader to not do anything if its invocation ID is outside the input image. Fun fact: image loads from outside the boundaries of an image will return all zeroes.
 * Using two compute shaders, run a horizontal and then a vertical blur. If you do this, do you still need to exchange the main and swap textures after the invocation?
 
-The final source code for this project can be downloaded [here](compute-tutorial-1.zip).
-
 Next time, we'll discuss storage buffers, uniform blocks, push constants, and the std140 + std430 layouts.
