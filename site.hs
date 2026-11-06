@@ -39,7 +39,7 @@ main = hakyllWith config $ do
 
     -- Match against a Pattern.
     -- https://hackage.haskell.org/package/hakyll-4.14.1.0/docs/Hakyll-Core-Identifier-Pattern.html
-    match "images/*" $ do
+    match "images/**" $ do
         -- Just keep the filename
         route   idRoute
         compile copyFileCompiler

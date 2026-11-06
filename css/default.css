@@ -169,7 +169,7 @@ div.shaders_grid {
     margin: 0 0;
     padding: 0 0;
   }
-  img {
+  img, video {
     width: 70rem;
   }
   main {
