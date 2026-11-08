@@ -15,6 +15,8 @@ Nodevember doesn't define what "procedural art" is, and in fact doesn't have any
 
 For me, I'll try to avoid using outside models or textures, and make everything in Godot, Blender, or some other application.
 
+If you're viewing this on Neocities, videos won't show up. Go to [https://theben27.github.io/](the Github site).
+
 ## Day 1: Origami
 
 ![](/images/nodevember2026/1-origami.mp4)
