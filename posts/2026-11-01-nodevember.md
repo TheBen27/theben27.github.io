@@ -27,7 +27,7 @@ The "cut" is done on the folded geometry, and what parts of the mesh are cut is 
 
 ![](/images/nodevember2026/2-furniture.png)
 
-This is based on a cabinet from Terry Practhett's novel "Making Money", which unfolds from a small drawer into a giant tree-like structure. Out of one drawer comes a series of smaller drawers, and when you open one of those, you get more drawers, and so on... in other words, it's a recursive cabinet.
+This is based on a cabinet from Terry Pratchett's novel "Making Money", which unfolds from a small drawer into a giant tree-like structure. Out of one drawer comes a series of smaller drawers, and when you open one of those, you get more drawers, and so on... in other words, it's a recursive cabinet.
 
 Geometry nodes does not directly support recursion. Instead, the node group that makes one drawer also gives the information needed to make the next one. On my version of Blender, passing a list of bundles into a repeat zone causes a crash, so it wasn't practical to make a cabinet have more than one open drawer.
 
@@ -96,11 +96,11 @@ And so on. To make a graphic out of this, we interpret each character in the str
 
 ![](/images/nodevember2026/7-tree1.png)
 
-You can use this sytem to make trees and fractals. The six images above use three L-systems, all copied from Wikipedia, with some tweaked parameters. The resulting curves are converted to grease pencil strokes for quality.
+You can use this system to make tree-like structures and fractals. The six images above use three L-systems, all copied from Wikipedia, with some tweaked parameters. The resulting curves are converted to grease pencil strokes for quality.
 
 Everything is done in Geometry nodes. I couldn't really tell you why - running an L-system requires lots of string parsing, which geometry nodes is not great at, and interpreting an L-system requires lots of imperative state updates, which geometry nodes can do but, but not with elegance.
 
-The best pattern I've found to draw the L-system is to put all of your state into a bundle and have a different node group for each character you handle, using lots of switch nodes to choose which node gruop to forward to the next loop of the repeat zone.
+The best pattern I've found to draw the L-system is to put all of your state into a bundle and have a different node group for each character you handle, using lots of switch nodes to choose which node group to forward to the next loop of the repeat zone.
 
 ![](/images/nodevember2026/7-tree2.png)
 

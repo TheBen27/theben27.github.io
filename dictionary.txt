@@ -58,3 +58,10 @@ wikibook
 Wikibook
 workgroup
 workgroups
+3D
+BSDF
+Nodevember
+Nodevember's
+nodevember2026
+rigidbodies
+rigidbody

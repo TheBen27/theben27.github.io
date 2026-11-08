@@ -52,7 +52,7 @@
 <p>The “cut” is done on the folded geometry, and what parts of the mesh are cut is remembered per-vertex with simulation nodes. An “is cut” field is turned from a boolean into a 0-1 float and smoothed out between neighboring vertices before being sent to the material to render. Since the field is smoothed and interpolated between vertices, the resulting cut lines have no jagged artifacts at the cost of losing detail.</p>
 <h2 id="day-2---furniture">Day 2 - Furniture</h2>
 <p><img src="../images/nodevember2026/2-furniture.png" /></p>
-<p>This is based on a cabinet from Terry Practhett’s novel “Making Money”, which unfolds from a small drawer into a giant tree-like structure. Out of one drawer comes a series of smaller drawers, and when you open one of those, you get more drawers, and so on… in other words, it’s a recursive cabinet.</p>
+<p>This is based on a cabinet from Terry Pratchett’s novel “Making Money”, which unfolds from a small drawer into a giant tree-like structure. Out of one drawer comes a series of smaller drawers, and when you open one of those, you get more drawers, and so on… in other words, it’s a recursive cabinet.</p>
 <p>Geometry nodes does not directly support recursion. Instead, the node group that makes one drawer also gives the information needed to make the next one. On my version of Blender, passing a list of bundles into a repeat zone causes a crash, so it wasn’t practical to make a cabinet have more than one open drawer.</p>
 <p>The final render uses multiple randomly-generated “branches” to make the final tree. There’s also post-it notes that emulate leaves.</p>
 <h2 id="stitch">3 - Stitch</h2>
@@ -87,9 +87,9 @@ F+F−F−F+F+F+F−F−F+F−F+F−F−F+F−F+F−F−F+F+F+F−F−F+F
 ...</code></pre>
 <p>And so on. To make a graphic out of this, we interpret each character in the string as an instruction, left-to-right: “F” means “go forward and draw a line”, “+” means “turn right”, and “-” means “turn left”. After 5 iterations, we get patterns that look like this;</p>
 <p><img src="../images/nodevember2026/7-tree1.png" /></p>
-<p>You can use this sytem to make trees and fractals. The six images above use three L-systems, all copied from Wikipedia, with some tweaked parameters. The resulting curves are converted to grease pencil strokes for quality.</p>
+<p>You can use this system to make tree-like structures and fractals. The six images above use three L-systems, all copied from Wikipedia, with some tweaked parameters. The resulting curves are converted to grease pencil strokes for quality.</p>
 <p>Everything is done in Geometry nodes. I couldn’t really tell you why - running an L-system requires lots of string parsing, which geometry nodes is not great at, and interpreting an L-system requires lots of imperative state updates, which geometry nodes can do but, but not with elegance.</p>
-<p>The best pattern I’ve found to draw the L-system is to put all of your state into a bundle and have a different node group for each character you handle, using lots of switch nodes to choose which node gruop to forward to the next loop of the repeat zone.</p>
+<p>The best pattern I’ve found to draw the L-system is to put all of your state into a bundle and have a different node group for each character you handle, using lots of switch nodes to choose which node group to forward to the next loop of the repeat zone.</p>
 <p><img src="../images/nodevember2026/7-tree2.png" /></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>I’m going to release one of these every week until the end of November, assuming I can keep up. The previous years had one prompt every two days, which gave you a lot more time for polish and conceptualization.</p>
