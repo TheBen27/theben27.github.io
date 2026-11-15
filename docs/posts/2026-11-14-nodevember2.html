@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Pointless Programming</title>
+        <link rel="stylesheet" href="../css/syntax.css" />
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <header>
+            
+            <img class="img_header_image" src="../images/nodevember2026/11-cavernous.png" />
+            <div class="img_header_links">
+                <div class="logo">
+                    <a href="../">The Pointless Programming Blog</a>
+                </div>
+                <nav>
+                    <a href="../">Posts</a>
+                    <a href="../shaders.html">Shaders</a>
+                    <a href="../about.html">About</a>
+                </nav>
+            </div>
+            
+        </header>
+
+        <main role="main">
+            <h1>Nodevember 2026 Week 2</h1>
+            <article>
+    <section class="header">
+        November 14, 2026
+        
+    </section>
+    <section>
+        <p><a href="https://nodevember.com/">Nodevember</a> continues! If you missed last week, check it out <a href="../posts/2026-11-01-nodevember.html">here</a>.</p>
+<!--more-->
+<p>If you’re viewing this on Neocities, videos won’t show up. Go to <a href="the%20Github%20site">https://theben27.github.io/</a>.</p>
+<h2 id="day-8-9-mycelia-wings">Day 8:-9 Mycelia, Wings</h2>
+<p><img src="../images/nodevember2026/8-mycelia.png" /></p>
+<p>This was made with Godot.</p>
+<p>Mycelia are the hair-like root systems of mushrooms. One mushroom can have thousands of thin tendrils or a few larger roots. To get a mycelia-like effect, I simulated the growth of thousands of hairs by tracking the position and heading of their endpoints, following a few simple rules:</p>
+<ul>
+<li>A new hair spawns from a central position with a random direction ten times a second</li>
+<li>Hairs move forward on every frame, leaving a trail behind on a canvas</li>
+<li>Hairs have a limited lifetime, and the trail becomes fainter as they get older</li>
+<li>Hairs slightly change their heading at random on every update</li>
+<li>Hairs partially align their headings to follow a pre-made “direction map” (made in Blender)</li>
+<li>Hairs have a small chance to create a new “branch” hair at their position with a similar but not identical heading on every update</li>
+</ul>
+<p>The mycelia were simulated on the GPU through compute shaders, which leads to some unusual restrictions. A CPU program is <em>mostly</em> sequential, and is invoked once. In contrast, a GPU program is invoked thousands or millions of times with different parameters and a high degree of concurrency. The GPU has fewer capabilities than the CPU, but is much faster for certain problems, with thousands of cores and built-in SIMD vectorization.</p>
+<p>The GPU has no heap or dynamic memory; memory for hairs has to be allocated in advance. This makes arbitrarily creating hairs (for branching) and deleting them (when their lifetime ends) require an <a href="https://gameprogrammingpatterns.com/object-pool.html">object pool</a> with a free list. This works, but GPUs have no locks, so making adding/removing particles to the pool “thread-safe” seems difficult. I decided to use an atomic “pool in-use” parameter and have the create/delete operations fail if it’s in use. You can try again next frame.</p>
+<p>To paint to the canvas, hairs just paint the pixel they’re on, with opacity based on lifetime. This makes hairs often skip pixels or double-paint the same pixel, but a better solution would be more time-consuming.</p>
+<p>The final image includes post-processing in the GIMP image editor, which is a little cheaty.</p>
+<h2 id="day-10-geode">Day 10: Geode</h2>
+<p><img src="../images/nodevember2026/10-geode.png" /></p>
+<p>This one’s not so great.</p>
+<h2 id="day-11-cavernous">Day 11: Cavernous</h2>
+<p><img src="../images/nodevember2026/11-cavernous.png" /></p>
+<p>This is a <a href="https://en.wikipedia.org/wiki/Menger_sponge">Menger sponge</a> with a chance for a cube to be deleted on each iteration, making the shape less regular and more broken down. The sponge has 7 levels, although the last two levels are faked in the Material.</p>
+<h2 id="day-12-erosion">Day 12: Erosion</h2>
+<p><img src="../images/nodevember2026/12-erosion.png" /></p>
+<p>Despite being an underwhelming effect, this took a lot of effort!</p>
+<p>I decided to see what happens when you apply JPEG compression too a mesh’s position. For fake JPEG compression of non-color data, you only really need three steps:</p>
+<ol type="1">
+<li>Split the image into 8x8 boxes and convert each box into the frequency domain with a Discrete Cosine Transform (DCT)</li>
+<li>Quantize (reduce the decimal places of) higher-frequency values more than lower-frequency ones</li>
+<li>Put the image back into the space domain with an inverse DCT</li>
+</ol>
+<p>The “frequency domain” is a signal processing idea. In short, we can represent the 8x8 box of one channel of values exactly via 64 (8x8) products of horizontal and vertical cosine waves of consistent frequenices and phases but different amplitudes. High-frequency waves correspond to details, and low-frequency waves correspond to bigger blobs. High-frequency waves are less “important” to the human eye, which is why JPEG gives low-frequency waves more precision.</p>
+<p>DCT scales very poorly with size, which I suspect is why JPEG has DCT operate on 8x8 blocks. Blender took a few seconds to process a 2000-vertex mesh, which is not big in the grand scheme of things.</p>
+<p>Instead of running the DCT on an image, we’re running it on a mesh’s vertex positions. Vertex positions are ordered by index, so they’re one-dimensional data. I decided to use a <a href="https://en.wikipedia.org/wiki/Hilbert_curve">Hilbert curve</a> to convert the 1D list into a 2D grid and back. So now the full process is:</p>
+<ol type="1">
+<li>Convert the 1D field into a 2D grid with a hilbert curve</li>
+<li>DCT on each 8x8 section of the grid</li>
+<li>Quantization</li>
+<li>Inverse DCT on each 8x8 section</li>
+<li>Convert the grid back into a field</li>
+<li>Set the position based on that</li>
+</ol>
+<p>This approach required a lot of bugfixing and optimizing. I found that using Grids to store information worked well, and used the Bake node to keep from having to recalculate everything on every update.</p>
+<p>If I could do this again, I’d convert the mesh to a 3D grid and run 8x8x8 DCT, which would probably give more interesting results at the cost of taking <em>much</em> longer to run.</p>
+<p>I used these sources to make nodes for DCT, inverse DCT, and hilbert curve transformations:</p>
+<ul>
+<li><a href="https://www.mathworks.com/help/images/discrete-cosine-transform.html">DCT - MathWorks</a></li>
+<li><a href="https://people.math.sc.edu/burkardt/cpp_src/hilbert_curve/hilbert_curve.html">Hilbert Curve - University of South Carolina</a></li>
+</ul>
+<h2 id="day-13-dune">Day 13: Dune</h2>
+<p><img src="../images/nodevember2026/13-dune.png" /></p>
+<p>Each dune is a separate object that gets blended into the ground through <a href="https://www.youtube.com/watch?v=RCQAwDyDO0o">this technique</a>. The vertices of the dune close to the ground have their normals bent to match the ground’s. This trick depends heavily on the geometry and material properties of the objects you’re blending.</p>
+<p>If you want to do this yourself, I recommend trying different kinds of blending to get the right results. You can also have each object blend into each others’ normals; if you do, have the maximum blending be 50% so they fade into a midpoint.</p>
+<p><img src="../images/nodevember2026/13-dune2.png" /></p>
+<p>There is a much better approach for blending called <a href="https://meshblend.lervik.com/">MeshBlend</a>, but I think it’d require doing all of your lighting in the compositor and making some complicated node groups.</p>
+<h2 id="day-14-shell">Day 14: Shell</h2>
+<p><img src="../images/nodevember2026/14-shell.png" /></p>
+<p>It’s some kind of forcefield.</p>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+            This site was generated with
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+        </footer>
+    </body>
+</html>
